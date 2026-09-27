@@ -383,10 +383,25 @@ generate the index notes and the Systems map</pre>
         vec2 uv = (gl_FragCoord.xy - .5*R) / R.y;
         vec3 paperW = vec3(.95, .94, .92), inkK = vec3(.06, .06, .07);
         vec3 col;
-        if (S >= 8.9) {                                                         // the new universe, dim, behind the site
-          PX = 1./R.y; PAPER = vec3(.051, .055, .063); INK = vec3(.30, .30, .35);
-          tone = clamp(galaxy((uv - vec2(.45, .2))/.28, T*.05)*.9, 0., 1.) + star(uv, .05);
+        if (S >= 8.9) {                                                         // the new universe: a dim black manga page behind the site
+          PX = 1./R.y; PAPER = vec3(.051, .055, .063); INK = vec3(.26, .26, .30);
+          vec2 gc = vec2(.45, .2);
+          float gd = galaxy((uv - gc)/.3, T*.35);                                   // visibly turning
+          // the whole page is toned: drifting screentone clouds, lighter behind the headline
+          float field = fbm(uv*2.2 + vec2(T*.06, -T*.04));
+          tone = clamp(.12 + .38*smoothstep(.35, .75, field), 0., 1.) * mix(.45, 1., smoothstep(.15, .7, length(uv - vec2(-.35, .02))));
+          tone = max(tone, clamp(gd*.95, 0., 1.));
+          line = max(contour(gd, .3, 1.5), contour(gd, .6, 1.5)) * smoothstep(1., .3, length(uv - gc));   // inked galaxy arms
+          line = max(line, contour(field, .62, 1.2)*.8);                              // inked edges of the tone clouds
+          line = max(line, speedLines(uv, gc, 140., 1.2, 2.5, .62, .35));            // focus lines rushing into the core
           col = compose();
+          // four-point star glints, twinkling
+          vec2 c = floor(uv*9.), f = fract(uv*9.) - .5 - (vec2(h(c + 3.1), h(c + 7.7)) - .5)*.5;
+          float tw = .5 + .5*sin(T*3. + h(c)*40.), sz = (.12 + .1*h(c + 5.))*tw*step(.72, h(c));
+          float glint = max(1. - smoothstep(0., .012, abs(f.x)) , 1. - smoothstep(0., .012, abs(f.y))) * step(max(abs(f.x), abs(f.y)), sz)
+                      * (1. - smoothstep(0., sz, abs(f.x) + abs(f.y)));
+          col = mix(col, vec3(.72, .72, .76), clamp(glint*1.6, 0., 1.));
+          col *= .95 + .05*n(gl_FragCoord.xy*.7);                               // paper grain
         } else {
           vec2 pg = CAM.xy + uv*CAM.z;                                          // camera over the page
           float pxp = CAM.z/R.y;
@@ -476,14 +491,12 @@ generate the index notes and the Systems map</pre>
     document.getElementById('skip').addEventListener('click', skip);
     ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(e => addEventListener(e, skip, { passive: true }));
     const freeze = new URLSearchParams(location.search).get('t');   // ponytail: dev hook, ?t=7.2 holds the timeline at 7.2s
+    let frame = 0;
     const loop = () => {
       const s = freeze === null ? clock() + offset : +freeze;
       if (s >= REVEAL && root.classList.contains('intro')) { root.classList.remove('intro', 'skipped'); dispatchEvent(new Event('reveal')); }
-      if (s > 10.5) {                                  // settled: one still frame, then only on resize
-        draw(DONE, 0); addEventListener('resize', () => draw(DONE, 0));
-        return;
-      }
-      draw(s, clock());
+      // settled: keep drifting, but at 30fps since everything moves slowly
+      if (s <= 10.5 || (frame++ & 1)) draw(s > 10.5 ? DONE : s, clock());
       requestAnimationFrame(loop);
     };
     requestAnimationFrame(loop);
