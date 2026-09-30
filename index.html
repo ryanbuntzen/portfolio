@@ -598,5 +598,47 @@ generate the index notes and the Systems map</pre>
     u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0,
   }, undefined, still ? 0 : 1);
 </script>
+<script>
+  // ponytail: edit the copy in the page itself. ?edit turns it on, drafts live in this browser
+  // only, and "Copy edits" hands back a small JSON patch to commit. Visitors never see a draft.
+  if (new URLSearchParams(location.search).has('edit')) {
+    const SEL = '.wrap h1, .wrap h2, .wrap h3, .wrap p, .wrap .word small, .wrap .stack';
+    const els = [...document.querySelectorAll(SEL)];
+    const KEY = 'portfolio:edits';
+    const draft = JSON.parse(localStorage.getItem(KEY) || '{}');
+    const orig = els.map(e => e.textContent);
+    els.forEach((e, i) => {
+      if (draft[i] !== undefined) e.textContent = draft[i];
+      e.contentEditable = 'true';
+      e.spellcheck = true;
+      e.style.outline = '1px dashed rgba(255,255,255,.18)';
+      e.style.outlineOffset = '4px';
+      e.addEventListener('input', () => {
+        draft[i] = e.textContent;
+        localStorage.setItem(KEY, JSON.stringify(draft));
+        count.textContent = Object.keys(draft).filter(k => draft[k] !== orig[k]).length + ' changed';
+      });
+    });
+    const bar = document.createElement('div');
+    bar.style.cssText = 'position:fixed;left:50%;bottom:16px;transform:translateX(-50%);z-index:10;display:flex;gap:10px;align-items:center;' +
+      'padding:10px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.14);background:rgba(13,14,16,.72);' +
+      'backdrop-filter:blur(14px) saturate(1.8);font:500 .85rem var(--sans);color:var(--dim)';
+    bar.innerHTML = '<span id="ed-count">0 changed</span>' +
+      '<button id="ed-copy" type="button">Copy edits</button>' +
+      '<button id="ed-reset" type="button">Discard</button>';
+    document.body.append(bar);
+    bar.querySelectorAll('button').forEach(b => b.style.cssText =
+      'height:30px;padding:0 12px;border-radius:999px;border:1px solid rgba(255,255,255,.2);background:transparent;color:#ecedef;font:500 .85rem var(--sans);cursor:pointer');
+    const count = bar.querySelector('#ed-count');
+    count.textContent = Object.keys(draft).filter(k => draft[k] !== orig[k]).length + ' changed';
+    bar.querySelector('#ed-copy').onclick = async () => {
+      const patch = els.map((e, i) => ({ i, was: orig[i], now: e.textContent }))
+                       .filter(p => p.was !== p.now);
+      await navigator.clipboard.writeText(JSON.stringify(patch, null, 2));
+      count.textContent = 'copied ' + patch.length;
+    };
+    bar.querySelector('#ed-reset').onclick = () => { localStorage.removeItem(KEY); location.reload(); };
+  }
+</script>
 </body>
 </html>
