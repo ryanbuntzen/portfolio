@@ -94,9 +94,9 @@
   .cell .stack { font:500 .78rem var(--mono); color:var(--dim); margin-top:6px; }
   .c1 { grid-column:span 4; justify-content:space-between; }
   .c2 { grid-column:span 2; grid-row:span 2; background:linear-gradient(180deg, color-mix(in oklab, var(--accent) 22%, var(--bg2)), var(--bg2) 70%); }
-  .c3 { grid-column:span 2; }
+  .c3 { grid-column:span 3; }
   .c5 { grid-column:span 4; justify-content:space-between; }
-  .c4 { grid-column:span 2; background:repeating-linear-gradient(135deg, var(--bg2) 0 14px, color-mix(in oklab, var(--fg) 4%, var(--bg2)) 14px 15px); }
+  .c4 { grid-column:span 3; background:repeating-linear-gradient(135deg, var(--bg2) 0 14px, color-mix(in oklab, var(--fg) 4%, var(--bg2)) 14px 15px); }
   pre { margin:0; font:400 .8rem/1.6 var(--mono); color:var(--dim); white-space:pre-wrap; overflow-wrap:anywhere; }
   pre b { color:var(--fg); font-weight:500; }
   .big { font-size:clamp(3rem, 7vw, 5.5rem); font-weight:700; letter-spacing:-.05em; line-height:1; color:var(--accent); font-variant-numeric:tabular-nums; }
@@ -228,17 +228,17 @@ generate the index notes and the Systems map</pre>
             <div class="stack">python, todoist api, google calendar, telegram</div>
           </div>
         </div>
-        <div class="cell c3 rv">
-          <h3>Scholarship pipeline</h3>
-          <p>Collects awards, filters them against my profile, and drafts application material, so I only see deadlines that survived the filter.</p>
-          <div class="stack">python, todoist api</div>
-        </div>
         <div class="cell c5 rv">
           <div>
             <h3>Content pipeline</h3>
             <p>A 2,300-line pipeline that takes a script to a published video: Speechify voiceover, b-roll cut together with ffmpeg, the render through Remotion, then upload and scheduling over the YouTube API. Ten Claude Code skills sit on top of it, one per stage, so any stage can be run or re-run on its own.</p>
             <div class="stack">python, remotion, ffmpeg, youtube api</div>
           </div>
+        </div>
+        <div class="cell c3 rv">
+          <h3>Scholarship pipeline</h3>
+          <p>Collects awards, filters them against my profile, and drafts application material, so I only see deadlines that survived the filter.</p>
+          <div class="stack">python, todoist api</div>
         </div>
         <div class="cell c4 rv">
           <h3>Small fixes</h3>
