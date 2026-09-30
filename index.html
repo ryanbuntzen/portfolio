@@ -30,7 +30,14 @@
   .wrap { max-width:1200px; margin:0 auto; padding:0 max(16px, env(safe-area-inset-left)); }
   .skip { position:absolute; left:-999px; } .skip:focus { left:16px; top:16px; z-index:10; background:var(--bg2); padding:8px 12px; }
 
-  nav { height:68px; display:flex; align-items:center; justify-content:space-between; }
+  /* glass bar, after ozcanyldzhn/liquid-glass.js (MIT): blurred and over-saturated backdrop,
+     a bright top edge and a dark bottom one, so the page bends through it as it scrolls past. */
+  nav { position:sticky; top:12px; z-index:4; height:56px; padding:0 22px; display:flex; align-items:center; justify-content:space-between;
+    border-radius:999px; border:1px solid rgba(255,255,255,.12); background:rgba(13,14,16,.45);
+    backdrop-filter:blur(14px) saturate(1.8); -webkit-backdrop-filter:blur(14px) saturate(1.8);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.22), inset 0 -1px 0 rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.35); }
+  nav::after { content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(160deg, rgba(255,255,255,.10), transparent 42%, rgba(255,255,255,.05)); }
   nav .me { font-weight:600; text-decoration:none; letter-spacing:-.02em; }
   nav ul { display:flex; gap:28px; list-style:none; margin:0; padding:0; font-size:.95rem; color:var(--dim); }
   nav ul a { text-decoration:none; padding:10px 0; } nav ul a:hover { color:var(--fg); }
@@ -99,7 +106,7 @@
   footer a.huge:hover { color:var(--accent); }
 
   @media (max-width: 860px) {
-    nav ul { gap:18px; }
+    nav { padding:0 16px; } nav ul { gap:18px; }
     .hero { grid-template-columns:1fr; min-height:auto; padding-top:32px; }
     #metal { justify-self:center; max-width:240px; order:-1; }
     .feature { grid-template-columns:1fr; } .feature .word { min-height:220px; } .feature.alt .word { order:0; } .feature .txt { padding:28px; }
