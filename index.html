@@ -106,6 +106,12 @@
     transform:perspective(190px) rotateX(66deg); transform-origin:50% 0;
     mask-image:linear-gradient(180deg, transparent, #000 20%, #000 64%, transparent);
     -webkit-mask-image:linear-gradient(180deg, transparent, #000 20%, #000 64%, transparent); }
+  .sky .place { position:absolute; top:20px; left:0; right:0; z-index:2; text-align:center;
+    font:600 .7rem var(--sans); letter-spacing:.34em; color:rgba(200,236,255,.7); text-shadow:0 2px 10px rgba(0,0,0,.7); }
+  .sky .hud { position:absolute; right:16px; bottom:16px; z-index:2; margin:0; padding:8px 11px; text-align:left;
+    border:1px solid rgba(120,220,255,.35); background:rgba(0,20,30,.55); color:#9ef; font:500 .68rem/1.55 var(--mono); }
+  .sky .hud s { text-decoration:none; color:#d6f2ff; font-variant-numeric:tabular-nums; }
+  .sky .word small { left:18px; right:auto; bottom:18px; }
   .sky .word span { position:relative; z-index:2; font-size:clamp(2rem, 5vw, 3.2rem); letter-spacing:.24em; text-shadow:0 2px 26px rgba(0,0,0,.65); }
   .sky .word small { z-index:2; }
   @media (prefers-reduced-motion: no-preference) { .sky .ground { animation:fly 2.6s linear infinite; } }
@@ -222,7 +228,13 @@
       <article class="feature sky rv">
         <div class="word" aria-hidden="true">
           <i class="horizon"><i class="sun"></i><i class="ground"></i><i class="line"></i></i>
-          <span translate="no">SKYCRAFT</span><small>click to fly</small>
+          <b class="place">LAKESIDE VILLAGE</b>
+          <span translate="no">SKYCRAFT</span>
+          <pre class="hud">SPD <s data-spd>112</s> kt
+ALT <s data-alt>243</s> m
+THR <s>78</s>%
+CAM cockpit [C]</pre>
+          <small>click to fly</small>
         </div>
         <div class="txt">
           <div>
@@ -608,19 +620,32 @@ generate the index notes and the Systems map</pre>
     gsap.fromTo('.laser .word i', { scaleX: 0 }, { scaleX: 1, ease: 'none',
       scrollTrigger: { trigger: '.laser', start: 'top 80%', end: 'center 50%', scrub: true } });
 
-    // the plates swipe off the deck, one per step of the scroll
+    // The plates swipe off the deck, one per step of the scroll. The lead-in and the tail keep both
+    // swipes inside the stretch where the card is actually on screen, rather than at the very edges.
     const deck = gsap.utils.toArray('.swipe .deck b');
     deck.forEach((c, i) => gsap.set(c, { zIndex: deck.length - i, y: i * 12, scale: 1 - i * .05 }));
     const swipe = gsap.timeline({
-      scrollTrigger: { trigger: '.swipe', start: 'top 82%', end: 'bottom 45%', scrub: true } });
+      scrollTrigger: { trigger: '.swipe', start: 'top 72%', end: 'bottom 58%', scrub: .6 } });
     deck.slice(0, -1).forEach((c, i) => {
-      swipe.to(c, { xPercent: -140, rotate: -13, opacity: 0, ease: 'none' }, i)
-           .to(deck.slice(i + 1), { y: '-=12', scale: '+=0.05', ease: 'none' }, i);
+      const at = .35 + i * 1.25;
+      swipe.to(c, { xPercent: -145, rotate: -14, opacity: 0, ease: 'power1.in', duration: 1 }, at)
+           .to(deck.slice(i + 1), { y: '-=12', scale: '+=0.05', ease: 'none', duration: 1 }, at);
     });
+    swipe.to({}, { duration: .4 });     // the last plate sits a beat before the card leaves
 
     // the horizon tips as the flight card goes past, like rolling out of a bank
     gsap.fromTo('.sky .horizon', { rotate: 4 }, { rotate: -4, ease: 'none',
       scrollTrigger: { trigger: '.sky', start: 'top bottom', end: 'bottom top', scrub: true } });
+
+    // and the HUD reads out the climb, same fields the game prints
+    const spd = document.querySelector('.sky .hud [data-spd]');
+    const alt = document.querySelector('.sky .hud [data-alt]');
+    if (spd && alt) {
+      const fly = { spd: 96, alt: 138 };
+      gsap.to(fly, { spd: 171, alt: 406, ease: 'none',
+        scrollTrigger: { trigger: '.sky', start: 'top bottom', end: 'bottom top', scrub: true },
+        onUpdate() { spd.textContent = fly.spd | 0; alt.textContent = fly.alt | 0; } });
+    }
   }
 </script>
 <script type="module">
