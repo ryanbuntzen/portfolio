@@ -70,8 +70,8 @@
 
   .laser { margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:var(--r); overflow:hidden; border:1px solid var(--line); background:var(--bg2); }
   .laser .word { position:relative; min-height:360px; display:grid; place-items:center; background:#1c1c1c; overflow:hidden; }
-  .laser .word span { font-size:clamp(4rem, 11vw, 9rem); font-weight:700; letter-spacing:-.06em; color:#f2f2f2; }
-  .laser .word i { position:absolute; left:0; right:0; top:50%; height:2px; background:#dc4b3e; box-shadow:0 0 24px #dc4b3e; transform-origin:left; }
+  .laser .word span { position:relative; z-index:1; font-size:clamp(4rem, 11vw, 9rem); font-weight:700; letter-spacing:-.06em; color:#f2f2f2; }
+  .laser .word i { position:absolute; left:0; right:0; top:50%; height:2px; background:#dc4b3e; box-shadow:0 0 24px #dc4b3e; transform-origin:left; z-index:0; }
   .laser .txt { padding:40px; display:flex; flex-direction:column; justify-content:space-between; gap:24px; }
   .laser .txt p { color:var(--dim); }
   .laser h3 { font-size:1.6rem; margin-bottom:10px; }
