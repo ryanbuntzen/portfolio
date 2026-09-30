@@ -146,8 +146,8 @@
 
   <header class="hero">
     <div>
-      <h1>I build the tools <em>I actually use.</em></h1>
-      <p>UCLA student. I build small apps and automations with Claude Code. The ones I am still using a month later end up on this page.</p>
+      <h1>I build tools <em>I truly use.</em></h1>
+      <p>I am UCLA student that builds small apps and automations with Claude Code. This page represents my past projects.</p>
       <div class="ctas">
         <a class="btn primary" href="#work">See the work</a>
         <a class="btn ghost" href="https://github.com/ryanbuntzen">GitHub</a>
@@ -158,14 +158,14 @@
 
   <main>
     <section id="work">
-      <h2 class="rv">What I open every day.</h2>
+      <h2 class="rv">The apps I open daily.</h2>
 
       <article class="feature laser rv">
         <div class="word" aria-hidden="true"><span translate="no">laser</span><i></i></div>
         <div class="txt">
           <div>
             <h3>Laser</h3>
-            <p>Laser plans my day for me. It pulls the calendar from Google, puts fifteen minutes of padding either side of every event, and fills what is left with Todoist tasks, whole ones, because splitting a task across two blocks never worked. There are two focus modes. Tunnel shows the block I am in and nothing else. Laser adds the things I said I would do earlier and didn't. One HTML file, around 1,700 lines, no build step.</p>
+            <p>Laser plans my day for me. It acts as a Todoist client, utilizing the user's Todoist account but adding in new features I felt were personally useful. It pulls the user's calendar from Google, and fills the gaps with Todoist tasks. There are two focus modes: Tunnel vision shows the time-block the user is in and nothing else. Laser focus functions similarly, but features any uncompleted previous tasks as well.</p>
           </div>
           <div class="row">
             <a class="btn primary" href="https://todo-focus-8rn.pages.dev">Open app</a>
@@ -179,7 +179,7 @@
         <div class="txt">
           <div>
             <h3>Bruin Swipe</h3>
-            <p>I wanted to know what I was eating in the dining halls without typing every plate into MyFitnessPal. This has every item from every hall, café and truck on campus. Tap one and it logs the whole nutrient panel. UCLA only publishes 19 nutrients, so the other 20 I had to work out: parse the ingredient list, match each ingredient against the USDA database, then fit how many grams of each the serving holds to the numbers UCLA does print. Fried eggs come back as 99.7&nbsp;g of egg, which is two large ones, so the fit is doing its job. The day rolls over at 5am rather than midnight, since a 2am plate belongs to the night before. Once you have logged something it starts telling you what you are short on and which place to go fix it.</p>
+            <p>I wanted to track what I was eating in the dining halls without typing every plate into MyFitnessPal. This has every item from every hall, café and truck on campus. Add one to your day and it logs the whole nutrient panel for that item. UCLA only publishes 19 nutrients, so the other 20 I had to work out by parsing the ingredient list, matching each ingredient against the USDA database, and then fitting how many grams of each the serving holds to the numbers UCLA publishes. Once you have logged something it starts telling you what you are short on and the dining halls and foods that fill those gaps.</p>
           </div>
           <div class="row">
             <a class="btn primary" href="https://ryanbuntzen.github.io/bruin-swipe/">Open app</a>
@@ -193,7 +193,7 @@
         <div class="txt">
           <div>
             <h3>Skycraft</h3>
-            <p>A flight sim in one HTML file. The island is built from noise when the page loads, so you get a different one every time, and three.js takes care of the sky and the water. The flying is a small model I wrote by hand: mouse for pitch and roll, A and D for rudder, W and S for throttle, shift to boost. Press C if you would rather fly it from inside the cockpit.</p>
+            <p>A Minecraft-esque flight simulator I quickly built for fun while I was in class. The island is randomly generated from noise when the page loads, and three.js creates the sky and the water. Controls: mouse for pitch and roll, A and D for rudder, W and S for throttle, shift to boost. Press C to change camera modes.</p>
           </div>
           <div class="row">
             <a class="btn primary" href="https://ryanbuntzen.github.io/skycraft/">Open demo</a>
@@ -205,7 +205,7 @@
 
     <section id="tools">
       <h2 class="rv">The system behind my day.</h2>
-      <p class="lead rv">None of these scripts know about each other. They all just write to Todoist, and I read the day off that.</p>
+      <p class="lead rv">All these scripts work in conjunction through Todoist and my Laser app to automate different processes in my life.</p>
 
       <div class="bento">
         <div class="cell c1 rv">
@@ -216,7 +216,7 @@ turn prose mentions into two-way wikilinks
 generate the index notes and the Systems map</pre>
           <div>
             <h3>Obsidian vault</h3>
-            <p>Every project is symlinked into one vault. A build script keeps the notes linked to each other and draws a map of what feeds what, so the whole system fits on one page. I run it whenever things have drifted.</p>
+            <p>Every project is symlinked into one vault. A script keeps the notes linked to each other and draws a map of what feeds what, so the whole system fits together. I run it to keep Claude's context relevant.</p>
             <div class="stack">python, obsidian</div>
           </div>
         </div>
@@ -224,25 +224,25 @@ generate the index notes and the Systems map</pre>
           <div class="big">5 min</div>
           <div>
             <h3>Dispatcher and daily brief</h3>
-            <p>I had five cron jobs and they kept drifting apart, so they are one dispatcher now, 108 lines, waking up every five minutes. It keeps its own schedule in a Todoist task I can edit from Laser. If the laptop was asleep when a slot came round it runs it late instead of skipping it, and it will not run the same slot twice. In the morning it folds my mail into my calendar and sends the lot to my phone on Telegram.</p>
+            <p>Nine time-based scheduled jobs underneath one dispatcher, dispatching every five minutes. It keeps its own schedule through a Todoist task in order to run from Laser. If my laptop was asleep when a task was meant to run, it runs it as soon as my laptop awakens. In the morning, it puts any events from my email into my calendar and sends a daily update to my phone on Telegram.</p>
             <div class="stack">python, todoist api, google calendar, telegram</div>
           </div>
         </div>
         <div class="cell c5 rv">
           <div>
             <h3>Content pipeline</h3>
-            <p>Getting a script to an uploaded video used to eat most of a day. Now Speechify reads it, ffmpeg cuts the b-roll against the voiceover, Remotion renders, and the YouTube API does the upload and the scheduling. About 2,300 lines of Python. Ten Claude Code skills sit on top, one per stage, so when something comes out wrong I only redo that stage.</p>
+            <p>I automated content creation for a YouTube channel I post to. After writing the script, Speechify converts it into a voice clip, ffmpeg lays b-roll against the voiceover, Remotion renders, and the YouTube API does the upload and the scheduling. About 2,300 lines of Python. Ten Claude Code skills work throughout the pipeline in a ten stage process.</p>
             <div class="stack">python, remotion, ffmpeg, youtube api</div>
           </div>
         </div>
         <div class="cell c3 rv">
           <h3>Scholarship pipeline</h3>
-          <p>Scrapes scholarships, drops the ones I do not qualify for, and starts a draft for whatever is left. I only ever see the deadlines that made it through.</p>
+          <p>Scrapes scholarships, drops the ones I do not qualify for, and starts a draft for whatever is left. Puts only the deadlines of the ones I am qualified for in Todoist.</p>
           <div class="stack">python, todoist api</div>
         </div>
         <div class="cell c4 rv">
           <h3>Small fixes</h3>
-          <p>A userscript that pulls the suggested posts and reels back out of Instagram, and a Drive script that renames my resale photos to their SKUs.</p>
+          <p>A userscript that removes the suggested posts and reels from my Instagram feed, and a Drive script that renames my resale photos to their SKUs, used for my old Depop business.</p>
           <div class="stack">userscript, google drive api</div>
         </div>
       </div>
