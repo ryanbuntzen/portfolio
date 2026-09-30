@@ -98,7 +98,7 @@
   .sky .word { background:linear-gradient(180deg, #080d1a 0%, #16243f 44%, #0c1322 44%, #090e1a 100%); }
   .sky .horizon { position:absolute; inset:-25%; overflow:hidden; }
   .sky .sun { position:absolute; left:50%; top:46%; width:min(40%, 240px); aspect-ratio:1; translate:-50% -50%; border-radius:50%;
-    background:radial-gradient(circle, rgba(255,170,115,.9), rgba(255,115,72,.26) 42%, rgba(255,90,60,0) 70%); }
+    background:radial-gradient(circle, rgba(196,158,255,.92), rgba(160,107,255,.3) 42%, rgba(140,90,255,0) 70%); }
   .sky .line { position:absolute; left:0; right:0; top:46%; height:1px; background:rgba(165,222,255,.5); box-shadow:0 0 22px rgba(120,190,255,.5); }
   .sky .ground { position:absolute; left:0; right:0; top:46%; bottom:0;
     background-image:linear-gradient(rgba(126,206,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(126,206,255,.28) 1px, transparent 1px);
@@ -463,7 +463,7 @@ generate the index notes and the Systems map</pre>
         if (inv > .5) { vec3 t = PAPER; PAPER = INK; INK = t; }
         float dotInk = screentone(tone, PI/4., 5.);
         float dotSpot = screentone(spot, PI/12., 5.) * (1. - dotInk);
-        vec3 col = mix(PAPER, vec3(1., .36, .23), dotSpot);
+        vec3 col = mix(PAPER, vec3(.63, .42, 1.), dotSpot);      // spot colour, the site accent
         return mix(col, INK, max(dotInk, line));
       }
 
@@ -661,7 +661,7 @@ generate the index notes and the Systems map</pre>
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   new ShaderMount(document.getElementById('metal'), liquidMetalFragmentShader, {
-    u_colorBack: [0, 0, 0, 0], u_colorTint: getShaderColorFromString('#ffffff'),
+    u_colorBack: [0, 0, 0, 0], u_colorTint: getShaderColorFromString('#a06bff'),
     u_image: img, u_isImage: true, u_shape: LiquidMetalShapes.none,
     u_contour: .4, u_distortion: .07, u_softness: .1, u_repetition: 2, u_shiftRed: .3, u_shiftBlue: .3, u_angle: 70,
     u_fit: ShaderFitOptions.contain, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0,
