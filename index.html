@@ -625,7 +625,7 @@ generate the index notes and the Systems map</pre>
     const deck = gsap.utils.toArray('.swipe .deck b');
     deck.forEach((c, i) => gsap.set(c, { zIndex: deck.length - i, y: i * 12, scale: 1 - i * .05 }));
     const swipe = gsap.timeline({
-      scrollTrigger: { trigger: '.swipe .deck', start: 'top 85%', end: 'bottom 30%', scrub: .6 } });
+      scrollTrigger: { trigger: '.swipe .deck', start: 'top 80%', end: 'bottom 30%', scrub: .6 } });
     deck.slice(0, -1).forEach((c, i) => {
       const at = .35 + i * 1.25;
       swipe.to(c, { xPercent: -145, rotate: -14, opacity: 0, ease: 'power1.in', duration: 1 }, at)
