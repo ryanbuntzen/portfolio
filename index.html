@@ -661,9 +661,9 @@ generate the index notes and the Systems map</pre>
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   new ShaderMount(document.getElementById('metal'), liquidMetalFragmentShader, {
-    u_colorBack: [0, 0, 0, 0], u_colorTint: getShaderColorFromString('#a06bff'),
+    u_colorBack: [0, 0, 0, 0], u_colorTint: getShaderColorFromString('#ffffff'),
     u_image: img, u_isImage: true, u_shape: LiquidMetalShapes.none,
-    u_contour: .4, u_distortion: .07, u_softness: .1, u_repetition: 2, u_shiftRed: .3, u_shiftBlue: .3, u_angle: 70,
+    u_contour: .4, u_distortion: .07, u_softness: .1, u_repetition: 2, u_shiftRed: 0, u_shiftBlue: .45, u_angle: 70,
     u_fit: ShaderFitOptions.contain, u_scale: .8, u_rotation: 0, u_offsetX: 0, u_offsetY: 0,
     u_originX: .5, u_originY: .5, u_worldWidth: 0, u_worldHeight: 0,
   }, undefined, still ? 0 : 1);
