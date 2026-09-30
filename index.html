@@ -68,13 +68,17 @@
   .lead { color:var(--dim); max-width:60ch; margin-top:16px; }
 
 
-  .laser { margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:var(--r); overflow:hidden; border:1px solid var(--line); background:var(--bg2); }
-  .laser .word { position:relative; min-height:360px; display:grid; place-items:center; background:#1c1c1c; overflow:hidden; }
-  .laser .word span { position:relative; z-index:1; font-size:clamp(4rem, 11vw, 9rem); font-weight:700; letter-spacing:-.06em; color:#f2f2f2; }
+  .feature { margin-top:48px; display:grid; grid-template-columns:1fr 1fr; gap:0; border-radius:var(--r); overflow:hidden; border:1px solid var(--line); background:var(--bg2); }
+  .feature .word { position:relative; min-height:360px; display:grid; place-items:center; background:#1c1c1c; overflow:hidden; }
+  .feature .word span { position:relative; z-index:1; font-size:clamp(4rem, 11vw, 9rem); font-weight:700; letter-spacing:-.06em; color:#f2f2f2; }
+  .feature .word small { position:absolute; bottom:24px; font:500 .76rem var(--mono); letter-spacing:.14em; text-transform:uppercase; color:var(--dim); }
   .laser .word i { position:absolute; left:0; right:0; top:50%; height:2px; background:#dc4b3e; box-shadow:0 0 24px #dc4b3e; transform-origin:left; z-index:0; }
-  .laser .txt { padding:40px; display:flex; flex-direction:column; justify-content:space-between; gap:24px; }
-  .laser .txt p { color:var(--dim); }
-  .laser h3 { font-size:1.6rem; margin-bottom:10px; }
+  .feature.alt .word { order:2; }
+  .feature .txt { padding:40px; display:flex; flex-direction:column; justify-content:space-between; gap:24px; }
+  .feature .txt p { color:var(--dim); }
+  .feature h3 { font-size:1.6rem; margin-bottom:10px; }
+  .swipe .word span { color:var(--accent); }
+  .sky .word span { font-size:clamp(2rem, 5vw, 3.2rem); letter-spacing:.24em; }
   .row { display:flex; gap:10px; flex-wrap:wrap; }
 
   .bento { margin-top:48px; display:grid; gap:16px; grid-template-columns:repeat(6, 1fr); grid-auto-rows:minmax(220px, auto); }
@@ -84,6 +88,7 @@
   .c1 { grid-column:span 4; justify-content:space-between; }
   .c2 { grid-column:span 2; grid-row:span 2; background:linear-gradient(180deg, color-mix(in oklab, var(--accent) 22%, var(--bg2)), var(--bg2) 70%); }
   .c3 { grid-column:span 2; }
+  .c5 { grid-column:span 4; justify-content:space-between; }
   .c4 { grid-column:span 2; background:repeating-linear-gradient(135deg, var(--bg2) 0 14px, color-mix(in oklab, var(--fg) 4%, var(--bg2)) 14px 15px); }
   pre { margin:0; font:400 .8rem/1.6 var(--mono); color:var(--dim); white-space:pre-wrap; overflow-wrap:anywhere; }
   pre b { color:var(--fg); font-weight:500; }
@@ -97,8 +102,8 @@
     nav ul { gap:18px; }
     .hero { grid-template-columns:1fr; min-height:auto; padding-top:32px; }
     #metal { justify-self:center; max-width:240px; order:-1; }
-    .laser { grid-template-columns:1fr; } .laser .word { min-height:220px; } .laser .txt { padding:28px; }
-    .bento { grid-template-columns:1fr; } .c1, .c2, .c3, .c4 { grid-column:auto; grid-row:auto; }
+    .feature { grid-template-columns:1fr; } .feature .word { min-height:220px; } .feature.alt .word { order:0; } .feature .txt { padding:28px; }
+    .bento { grid-template-columns:1fr; } .c1, .c2, .c3, .c4, .c5 { grid-column:auto; grid-row:auto; }
     section { padding-top:88px; }
   }
   @media (prefers-reduced-motion: reduce) { .btn { transition:none; } }
@@ -146,9 +151,9 @@
 
   <main>
     <section id="work">
-      <h2 class="rv">The app I open every morning.</h2>
+      <h2 class="rv">The apps I actually open.</h2>
 
-      <article class="laser rv">
+      <article class="feature laser rv">
         <div class="word" aria-hidden="true"><span translate="no">laser</span><i></i></div>
         <div class="txt">
           <div>
@@ -158,6 +163,34 @@
           <div class="row">
             <a class="btn primary" href="https://todo-focus-8rn.pages.dev">Open app</a>
             <a class="btn ghost" href="https://github.com/ryanbuntzen/laser">Source</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature swipe alt rv">
+        <div class="word" aria-hidden="true"><span>39</span><small>nutrients per item</small></div>
+        <div class="txt">
+          <div>
+            <h3>Bruin Swipe</h3>
+            <p>A day tracker for UCLA dining: every item at every hall, café and food truck, logged with the full nutrient panel. UCLA publishes 19 nutrients, so the other 20 are solved for &mdash; the ingredient list is parsed into leaf foods, matched against USDA SR Legacy, and non-negative least squares fits gram weights to the panel UCLA does print. Fried eggs resolve to 99.7&nbsp;g of egg at a 0.003 residual. The day rolls over at 5am, and after the first meal it names what you are behind on and where to fix it.</p>
+          </div>
+          <div class="row">
+            <a class="btn primary" href="https://ryanbuntzen.github.io/bruin-swipe/">Open app</a>
+            <a class="btn ghost" href="https://github.com/ryanbuntzen/bruin-swipe">Source</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="feature sky rv">
+        <div class="word" aria-hidden="true"><span translate="no">SKYCRAFT</span><small>click to fly</small></div>
+        <div class="txt">
+          <div>
+            <h3>Skycraft</h3>
+            <p>One HTML file of flight. Value noise and fbm build a voxel island with its own height map, three.js draws the sky and the water, and a small flight model gives it pitch, roll, rudder and boost. Chase or cockpit camera, bloom on the sun, and fresh terrain every load.</p>
+          </div>
+          <div class="row">
+            <a class="btn primary" href="https://ryanbuntzen.github.io/skycraft/">Open demo</a>
+            <a class="btn ghost" href="https://github.com/ryanbuntzen/skycraft">Source</a>
           </div>
         </div>
       </article>
@@ -192,6 +225,13 @@ generate the index notes and the Systems map</pre>
           <h3>Scholarship pipeline</h3>
           <p>Collects awards, filters them against my profile, and drafts application material, so I only see deadlines that survived the filter.</p>
           <div class="stack">python, todoist api</div>
+        </div>
+        <div class="cell c5 rv">
+          <div>
+            <h3>Content pipeline</h3>
+            <p>A 2,300-line pipeline that takes a script to a published video: Speechify voiceover, b-roll cut together with ffmpeg, the render through Remotion, then upload and scheduling over the YouTube API. Ten Claude Code skills sit on top of it, one per stage, so any stage can be run or re-run on its own.</p>
+            <div class="stack">python, remotion, ffmpeg, youtube api</div>
+          </div>
         </div>
         <div class="cell c4 rv">
           <h3>Small fixes</h3>
