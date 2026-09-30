@@ -386,11 +386,12 @@ generate the index notes and the Systems map</pre>
           vec2 gc = vec2(.45, .2);
           float gd = galaxy((uv - gc)/.3, T*.35);                                   // visibly turning
           // the whole page is toned: drifting screentone clouds, lighter behind the headline
-          float field = fbm(uv*2.2 + vec2(T*.06, -T*.04));
-          tone = clamp(.12 + .38*smoothstep(.35, .75, field), 0., 1.) * mix(.45, 1., smoothstep(.15, .7, length(uv - vec2(-.35, .02))));
+          float field = fbm(uv*3.4 + vec2(T*.06, -T*.04));                           // smaller clouds
+          float clear = smoothstep(.3, .65, length((uv - gc)*vec2(1., 1.2)));           // clouds fade out around the spiral
+          tone = clamp(.12 + .38*smoothstep(.35, .75, field)*clear, 0., 1.) * mix(.45, 1., smoothstep(.15, .7, length(uv - vec2(-.35, .02))));
           tone = max(tone, clamp(gd*.95, 0., 1.));
           line = max(contour(gd, .3, 1.5), contour(gd, .6, 1.5)) * smoothstep(1., .3, length(uv - gc));   // inked galaxy arms
-          line = max(line, contour(field, .62, 1.2)*.8);                              // inked edges of the tone clouds
+          line = max(line, contour(field, .62, 1.2)*.8*clear);                        // inked edges of the tone clouds
           line = max(line, speedLines(uv, gc, 140., 1.2, 2.5, .62, .35));            // focus lines rushing into the core
           col = compose();
           // four-point star glints, twinkling
